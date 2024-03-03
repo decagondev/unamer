@@ -1,9 +1,10 @@
 const express = require('express');
 const { exec } = require('child_process');
 const CORS = require('cors');
+const bodyParser = require('body-parser');
 
 const app = express();
-app.use(CORS());
+app.use(bodyParser.json());
 
 const PORT = process.env.PORT || 3000;
 
@@ -30,10 +31,10 @@ function djb2Hash(input) {
     return hash.toString(16);
 }
 
-app.get('/hasher/:key', (req, res) => {
-    const { key } = req.params;
-    const hashedKey = djb2Hash(key);
-    res.status(200).send(hashedKey);
+app.post('/hasher', (req, res) => {
+    const { key } = req.body;
+    const hashedKey = hashStringToKey(key);
+    res.status(200).json({ hashedKey });
 })
 
 
