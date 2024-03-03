@@ -39,7 +39,7 @@ app.post('/hasher', (req, res) => {
 
 
 app.get('/uname', (req, res) => {
-    exec('ls /etc', (error, stdout, stderr) => {
+    exec('cat /etc/os-release', (error, stdout, stderr) => {
         if (error) {
             console.error(`exec error: ${error}`);
             return res.status(500).json({ error: 'Internal server error' });
