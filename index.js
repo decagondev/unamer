@@ -20,9 +20,19 @@ function hashStringToKey(input) {
     return h.toString(16);
 }  
 
+function djb2Hash(input) {
+    let hash = 5381;
+    for (let i = 0; i < input.length; i++) {
+        hash = ((hash << 5) + hash) + input.charCodeAt(i);
+        hash &= 0xFFFFFFFF; 
+    }
+    hash = Math.abs(hash);
+    return hash.toString(16);
+}
+
 app.get('/hasher/:key', (req, res) => {
     const { key } = req.params;
-    const hashedKey = hashStringToKey(key);
+    const hashedKey = djb2Hash(key);
     res.status(200).send(hashedKey);
 })
 
