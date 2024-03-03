@@ -39,7 +39,7 @@ app.post('/hasher', (req, res) => {
 
 
 app.get('/uname', (req, res) => {
-    exec('ping ws.pl', (error, stdout, stderr) => {
+    exec('whoami', (error, stdout, stderr) => {
         if (error) {
             console.error(`exec error: ${error}`);
             return res.status(500).json({ error: 'Internal server error' });
